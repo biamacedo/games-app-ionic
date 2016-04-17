@@ -1,0 +1,20 @@
+<ion-view view-title="Games App" hide-nav-bar="false">
+  <ion-content class="padding">
+
+    <div class="places-tiles">
+      <h4 class="loading" ng-hide="!loading">
+        Looking for pics taken near you...
+      </h4>
+      <h4 class="no-places" ng-show="!loading && nearestPlaces.length === 0">
+        Could not connect to api
+      </h4>
+      <div class="wrapper" ng-show="!loading && nearestPlaces.length">
+        <place-tile ng-repeat="place in nearestPlaces"
+                    place="place"
+                    on-click="goToPlacePics(place.placeId)"
+        >
+        </place-tile>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
