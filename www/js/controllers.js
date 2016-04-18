@@ -47,7 +47,7 @@ angular.module('game.controllers', [])
 .controller('gmGameDetailController', ['$scope', '$state', '$stateParams', 'GameService' , function($scope, $state, $stateParams, GameService) {
     var gameId = $stateParams.gameId;
 
-    $scope.games = GameService.get(gameId);
+    $scope.game = GameService.get(gameId);
 
 }])
 
