@@ -10,11 +10,11 @@
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-pane>
 
-  <ion-side-menu side="right">
+  <ion-side-menu side="left">
     <header class="bar bar-header bar-stable">
       <h1 class="title">Games App</h1>
     </header>
-    <ion-content>
+    <ion-content class="has-header">
       <ion-list>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/profile">
           Profile
@@ -22,6 +22,10 @@
         </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/games/tabs">
           User Games
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/market">
+          Market
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/settings">
