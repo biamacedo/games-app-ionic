@@ -1,13 +1,12 @@
-<ion-view view-title="Games App" hide-nav-bar="false">
+<ion-view view-title="{{manufacturer}} Consoles">
   <ion-nav-buttons side="right">
     <button menu-toggle="right" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content class="has-header">
-
     <div class="grid">
-      <div ng-repeat="manufacturer in manufacturers">
+      <div ng-repeat="platform in platforms">
 
-        <a href="#/app/platform/list/{{manufacturer.id}}">{{manufacturer.name}}</a><br>
+        <a href="#/app/game/list/{{platform.id}}">{{platform.name}} - {{platform.manufacturer}}</a><br>
 
       </div>
     </div>

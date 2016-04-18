@@ -41,14 +41,55 @@ angular.module('game', [
       controller: 'gmLoginController'
   })
 
-  .state('main', {
+  .state('app', {
+    url: "/app",
+    abstract: true,
+    templateUrl: "templates/side-menu.html",
+    controller: 'gmAppController'
+  })
+
+  .state('app.main', {
       url: '/',
-      templateUrl: 'templates/main-page.html',
-      controller: 'gmMainController'
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/main-page.html',
+          controller: 'gmMainController'
+        }
+      }
+  })
+
+  .state('app.platform-list', {
+      url: '/platform/list/:manufacturerId',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/game-platform-list-page.html',
+          controller: 'gmPlatformListController'
+        }
+      }
+  })
+
+  .state('app.game-list', {
+      url: '/game/list/:platformId',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/game-list-page.html',
+          controller: 'gmGameListController'
+        }
+      }
+  })
+
+  .state('app.game-detail', {
+      url: '/game/detail/:gameId',
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/game-detail-page.html',
+          controller: 'gmGameDetailController'
+        }
+      }
   })
 
   // setup an abstract state for the tabs directive
-  .state('market', {
+  .state('app.market', {
       url: '/market',
       abstract: true,
       templateUrl: 'templates/market-tabs.html'
@@ -56,30 +97,34 @@ angular.module('game', [
 
   // Each tab has its own nav history stack:
 
-  .state('market.sell', {
+  .state('app.market.sell', {
     url: '/sell',
     views: {
-      'market-sell': {
-        templateUrl: 'templates/market-sell-page.html',
-        controller: 'DashCtrl'
+      'menuContent' :{
+        'market-sell': {
+          templateUrl: 'templates/market-sell-page.html',
+          controller: 'DashCtrl'
+        }
       }
     }
   })
 
-  .state('market.buy', {
+  .state('app.market.buy', {
       url: '/buy',
       views: {
-        'market-buy': {
-          templateUrl: 'templates/market-buy-page.html',
-          controller: 'ChatsCtrl'
+        'menuContent' :{
+          'market-buy': {
+            templateUrl: 'templates/market-buy-page.html',
+            controller: 'ChatsCtrl'
+          }
         }
       }
     })
 
-  .state('settings', {
+  .state('app.settings', {
     url: '/settings',
     views: {
-      'settings': {
+      'menuContent': {
         templateUrl: 'templates/settings-page.html',
         controller: 'AccountCtrl'
       }

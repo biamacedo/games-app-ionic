@@ -1,5 +1,9 @@
 angular.module('game.controllers', [])
 
+.controller('gmAppController', function($scope) {
+  $scope.platform = ionic.Platform.platform();
+})
+
 .controller('gmLoginController', ['$scope', '$state', '$ionicHistory', function($scope, $state, $ionicHistory) {
     $scope.login = function(){
         console.log("Clicking on Login Button");
@@ -7,16 +11,43 @@ angular.module('game.controllers', [])
         $ionicHistory.nextViewOptions({
           disableBack: true
         });
-        
-        $state.transitionTo("main");
+
+        $state.transitionTo("app.main");
     };
 
 
 }])
 
-.controller('gmMainController', ['$scope', '$state', function($scope, $state) {
+.controller('gmMainController', ['$scope', '$state', 'ManufacturerService' , function($scope, $state, ManufacturerService) {
+
+    $scope.manufacturers = ManufacturerService.all();
 
 
+}])
+
+.controller('gmPlatformListController', ['$scope', '$state', '$stateParams', 'PlatformService', 'ManufacturerService' , function($scope, $state, $stateParams, PlatformService, ManufacturerService) {
+    var manufacturerId = $stateParams.manufacturerId;
+
+    $scope.manufacturer = ManufacturerService.get(manufacturerId).name;
+
+    $scope.platforms = PlatformService.all();
+
+
+}])
+
+.controller('gmGameListController', ['$scope', '$state', '$stateParams', 'GameService', 'PlatformService' , function($scope, $state, $stateParams, GameService, PlatformService) {
+    var platformId = $stateParams.platformId;
+
+    $scope.platform = PlatformService.get(platformId).name;
+
+    $scope.games = GameService.all();
+
+}])
+
+.controller('gmGameDetailController', ['$scope', '$state', '$stateParams', 'GameService' , function($scope, $state, $stateParams, GameService) {
+    var gameId = $stateParams.gameId;
+
+    $scope.games = GameService.get(gameId);
 
 }])
 

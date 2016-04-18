@@ -91,27 +91,32 @@ angular.module('game.factories', [])
     id: 0,
     name: 'Super Smash Bros.',
     platforms: ['3DS', 'New 3DS', 'Wii'],
-    manufacturer: 'Nintendo'
+    manufacturer: 'Nintendo',
+    img: 'http://placehold.it/350x150'
   }, {
     id: 1,
     name: 'Mario Kart 7',
     platforms: ['3DS', 'New 3DS'],
-    manufacturer: 'Nintendo'
+    manufacturer: 'Nintendo',
+    img: 'http://placehold.it/350x150'
   }, {
     id: 2,
     name: 'Pokémon Omega Ruby',
     platforms: ['3DS', 'New 3DS'],
-    manufacturer: 'Nintendo'
+    manufacturer: 'Nintendo',
+    img: 'http://placehold.it/350x150'
   }, {
     id: 3,
     name: 'The Legend of Zelda: Ocarina of Time 3D',
     platforms: ['3DS', 'New 3DS'],
-    manufacturer: 'Nintendo'
+    manufacturer: 'Nintendo',
+    img: 'http://placehold.it/350x150'
   }, {
     id: 4,
     name: 'Super Mario 3D Land',
     platforms: ['3DS', 'New 3DS'],
-    manufacturer: 'Nintendo'
+    manufacturer: 'Nintendo',
+    img: 'http://placehold.it/350x150'
   }];
 
   return {

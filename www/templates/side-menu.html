@@ -1,0 +1,38 @@
+<ion-side-menus>
+
+  <ion-pane ion-side-menu-content>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button class="button-clear"><i class="icon" ng-class="{
+        'ion-ios-arrow-back': platform !== 'android',
+        'ion-android-arrow-back': platform == 'android'
+      }"></i> </ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
+  </ion-pane>
+
+  <ion-side-menu side="right">
+    <header class="bar bar-header bar-stable">
+      <h1 class="title">Games App</h1>
+    </header>
+    <ion-content>
+      <ion-list>
+        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/profile">
+          Profile
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/games/tabs">
+          User Games
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/settings">
+          Settings
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close ng-click="logout()">
+          Log Out
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-side-menu>
+</ion-side-menus>
