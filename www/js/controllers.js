@@ -1,7 +1,9 @@
 angular.module('game.controllers', [])
 
 .controller('gmAppController', function($scope) {
-  $scope.platform = ionic.Platform.platform();
+  $scope.mobile = {};
+  $scope.mobile.platform = ionic.Platform.platform();
+  console.log('Phone is:', $scope.mobile.platform);
 })
 
 .controller('gmLoginController', ['$scope', '$state', '$ionicHistory', function($scope, $state, $ionicHistory) {

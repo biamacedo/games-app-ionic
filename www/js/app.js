@@ -91,8 +91,11 @@ angular.module('game', [
   // setup an abstract state for the tabs directive
   .state('app.market', {
       url: '/market',
-      abstract: true,
-      templateUrl: 'templates/market-tabs.html'
+      views: {
+        'menuContent' :{
+          templateUrl: 'templates/market-tabs.html'
+        }
+      }
   })
 
   // Each tab has its own nav history stack:
@@ -100,11 +103,9 @@ angular.module('game', [
   .state('app.market.sell', {
     url: '/sell',
     views: {
-      'menuContent' :{
-        'market-sell': {
-          templateUrl: 'templates/market-sell-page.html',
-          controller: 'DashCtrl'
-        }
+      'marketSell': {
+        templateUrl: 'templates/market-sell-page.html'//,
+        // controller: 'DashCtrl'
       }
     }
   })
@@ -112,21 +113,61 @@ angular.module('game', [
   .state('app.market.buy', {
       url: '/buy',
       views: {
-        'menuContent' :{
-          'market-buy': {
-            templateUrl: 'templates/market-buy-page.html',
-            controller: 'ChatsCtrl'
-          }
+        'marketBuy': {
+          templateUrl: 'templates/market-buy-page.html'//,
+          // controller: 'ChatsCtrl'
         }
       }
     })
+
+  .state('app.user', {
+    url: '/user',
+    abstract:true
+  })
+
+  .state('app.user.games', {
+    url: '/games',
+    views: {
+      'menuContent' :{
+        templateUrl: 'templates/user-games-tabs.html'
+      }
+    }
+  })
+
+  .state('app.user.games.owned', {
+    url: '/owned',
+    views: {
+      'gamesOwned' :{
+        templateUrl: 'templates/user-games-owned-page.html'
+      }
+    }
+  })
+
+  .state('app.user.games.wish', {
+    url: '/wish',
+    views: {
+      'gamesWish' :{
+        templateUrl: 'templates/user-games-wish-page.html'
+      }
+    }
+  })
+
+  .state('app.user.profile', {
+    url: '/profile',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/user-profile-page.html'//,
+        // controller: 'AccountCtrl'
+      }
+    }
+  })
 
   .state('app.settings', {
     url: '/settings',
     views: {
       'menuContent': {
-        templateUrl: 'templates/settings-page.html',
-        controller: 'AccountCtrl'
+        templateUrl: 'templates/settings-page.html'//,
+        // controller: 'AccountCtrl'
       }
     }
   });

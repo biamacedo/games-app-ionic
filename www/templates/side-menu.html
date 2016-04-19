@@ -1,26 +1,32 @@
 <ion-side-menus>
 
   <ion-pane ion-side-menu-content>
-    <ion-nav-bar class="bar-stable">
-      <ion-nav-back-button class="button-clear"><i class="icon" ng-class="{
+    <ion-nav-bar class="bar-positive">
+      <ion-nav-back-button class="button-clear">
+        <i class="icon" ng-class="{
         'ion-ios-arrow-back': platform !== 'android',
         'ion-android-arrow-back': platform == 'android'
-      }"></i> </ion-nav-back-button>
+      }"></i>
+    </ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
   </ion-pane>
 
   <ion-side-menu side="left">
-    <header class="bar bar-header bar-stable">
-      <h1 class="title">Games App</h1>
+    <header class="bar bar-header bar-dark">
+      <h1 class="title">Menu</h1>
     </header>
     <ion-content class="has-header" overflow-scroll="false">
       <ion-list>
+        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/">
+          Games
+          <i class="icon ion-chevron-right icon-accessory"></i>
+        </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/profile">
           Profile
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
-        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/games/tabs">
+        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/games">
           User Games
           <i class="icon ion-chevron-right icon-accessory"></i>
         </ion-item>
@@ -40,3 +46,28 @@
     </ion-content>
   </ion-side-menu>
 </ion-side-menus>
+
+<!-- <ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+      <ion-nav-bar class="bar-light">
+        <ion-nav-back-button>
+        </ion-nav-back-button>
+        <ion-nav-buttons side="left">
+          <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+          </button>
+        </ion-nav-buttons>
+      </ion-nav-bar>
+      <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left">
+      <ion-header-bar class="bar-positive">
+        <h1 class="title">Menu</h1>
+      </ion-header-bar>
+      <ion-content>
+        <ul class="list">
+          <a href="#/app/market" class="item" menu-close>Tabs</a>
+          <a href="#/app/" class="item" menu-close>About</a>
+        </ul>
+      </ion-content>
+    </ion-side-menu>
+  </ion-side-menus> -->

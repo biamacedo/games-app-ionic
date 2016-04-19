@@ -1,14 +1,20 @@
-<ion-tabs class="tabs-icon-top tabs-color-active-positive"
-  ng-class="{'tabs-icon-top': !platform.android, 'tabs-icon-left': platform.android}">
-
-  <!-- Dashboard Tab -->
-  <ion-tab title="Sell" icon-off="ion-ios-pulse" icon-on="ion-ios-pulse-strong" href="#/app/market/sell">
-    <ion-nav-view name="market-sell"></ion-nav-view>
+<ion-tabs
+  ng-class="{
+  'tabs-icon-top tabs-color-active-positive': mobile.platform == 'ios',
+  'tabs-icon-left tabs-top tabs-striped tabs-positive': mobile.platform == 'android'
+  }">
+  <!-- tabs-icon-only -->
+  <ion-tab title="Sell" ng-attr-icon="{{ mobile.platform == 'android' ? 'ion-card' : undefined}}"
+  ng-attr-icon-off="{{ mobile.platform == 'ios' ? 'ion-ios-pricetags-outline' : undefined}}"
+  ng-attr-icon-on="{{ mobile.platform == 'ios' ? 'ion-ios-pricetags' : undefined}}"
+  href="#/app/market/sell">
+    <ion-nav-view name="marketSell"></ion-nav-view>
   </ion-tab>
-
-  <!-- Chats Tab -->
-  <ion-tab title="Buy" icon-off="ion-ios-chatboxes-outline" icon-on="ion-ios-chatboxes" href="#/app/market/buy">
-    <ion-nav-view name="market-buy"></ion-nav-view>
+  <ion-tab title="Buy" ng-attr-icon="{{ mobile.platform == 'android' ? 'ion-android-cart' : undefined}}"
+  ng-attr-icon-off="{{ mobile.platform == 'ios' ? 'ion-ios-cart-outline' : undefined}}"
+  ng-attr-icon-on="{{ mobile.platform == 'ios' ? 'ion-ios-cart' : undefined}}"
+  href="#/app/market/buy">
+    <ion-nav-view name="marketBuy"></ion-nav-view>
   </ion-tab>
 
 </ion-tabs>
