@@ -113,7 +113,7 @@ angular.module('game.factories', ['ngCordovaOauth'])
   };
 }])
 
-.factory('ManufacturerService', function() {
+.factory('ManufacturerService', ['API_CONSTANTS', function(API_CONSTANTS) {
   // Might use a resource here that returns a JSON array
 
   // Some fake testing data
@@ -148,7 +148,7 @@ angular.module('game.factories', ['ngCordovaOauth'])
       return null;
     }
   };
-})
+}])
 
 .factory('PlatformService', function() {
   // Might use a resource here that returns a JSON array
