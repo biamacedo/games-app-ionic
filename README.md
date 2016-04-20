@@ -21,8 +21,12 @@ Register the origins from which your app is allowed to access the Google APIs, a
   * In the **Authorized JavaScript origins** field, enter the origin for ngCordovaOAuth: **https://localhost**
   * In the **Authorized redirect URIs** field, enter the redirect URI for ngCordovaOAuth: **http://localhost/callback**
   * Press the Create button.
-<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/google_sign_in_configuration.png" width="200">
 6. From the resulting OAuth client dialog box, copy the Client ID to paste it on the **constants.js** file. The Client ID lets your app access enabled Google APIs.
+
+<p align="center">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/google_sign_in_configuration.png" width="550">
+</p>
+
 Now you can try Google Sign-In on the app.
 
 #### Facebook Step By Step
@@ -39,8 +43,11 @@ Now you can try Google Sign-In on the app.
 10. Go to the **Client OAuth Settings** section.
 11. Enable **Client OAuth Login**, **Web OAuth Login** and **Embedded Browser OAuth Login**.
 12. On **Valid OAuth redirect URIs**, add ngCordovaOAuth redirect URI: **http://localhost/callback**
-<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/facebook_sign_in_configuration.png" width="200">
-12. To finish click on **Save Changes**.
+13. To finish click on **Save Changes**.
+
+<p align="center">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/facebook_sign_in_configuration.png" width="650" >
+</p>
 
 ## Functionalities
 
@@ -68,7 +75,7 @@ Now you can try Google Sign-In on the app.
 
 ## Pre-Requisites
 
-* [Node.js](https://nodejs.org/) installed
+* [Node.js](https://nodejs.org/) installed, for the NPM package manager
 * [Apache Cordova](https://cordova.apache.org/) installed
 * [Ionic](http://ionicframework.com/) installed
 
