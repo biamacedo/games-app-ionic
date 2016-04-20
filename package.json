@@ -1,7 +1,7 @@
 {
-  "name": "games-app",
+  "name": "GameStart",
   "version": "1.1.1",
-  "description": "games-app: An Ionic project",
+  "description": "GameStart: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
@@ -20,7 +20,11 @@
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    {
+      "locator": "https://git-wip-us.apache.org/repos/asf/cordova-plugin-inappbrowser.git",
+      "id": "cordova-plugin-inappbrowser"
+    }
   ],
   "cordovaPlatforms": [
     "android"

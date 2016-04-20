@@ -43,8 +43,10 @@ angular.module('game.factories', ['ngCordovaOauth'])
         // $cordovaOauth.facebook(string clientId, array appScope, object options);
          $cordovaOauth.facebook(FACEBOOK_CLIENT_ID, FACEBOOK_SCOPES).then(function(result) {
              console.log("Response Token Object -> ", result);
+             console.log(result);
 
              user.accessToken = result.access_token;
+             console.log("Access Token Object -> ", result.access_token);
 
              $http.get(FACEBOOK_GET_INFO_URL, {
                params: {
