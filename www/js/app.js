@@ -111,22 +111,17 @@ angular.module('game', [
   })
 
   .state('app.market.buy', {
-      url: '/buy',
-      views: {
-        'marketBuy': {
-          templateUrl: 'templates/market-buy-page.html'//,
-          // controller: 'ChatsCtrl'
-        }
+    url: '/buy',
+    views: {
+      'marketBuy': {
+        templateUrl: 'templates/market-buy-page.html'//,
+        // controller: 'ChatsCtrl'
       }
-    })
-
-  .state('app.user', {
-    url: '/user',
-    abstract:true
+    }
   })
 
-  .state('app.user.games', {
-    url: '/games',
+  .state('app.user-games', {
+    url: '/user/games',
     views: {
       'menuContent' :{
         templateUrl: 'templates/user-games-tabs.html'
@@ -134,7 +129,7 @@ angular.module('game', [
     }
   })
 
-  .state('app.user.games.owned', {
+  .state('app.user-games.owned', {
     url: '/owned',
     views: {
       'gamesOwned' :{
@@ -143,7 +138,7 @@ angular.module('game', [
     }
   })
 
-  .state('app.user.games.wish', {
+  .state('app.user-games.wish', {
     url: '/wish',
     views: {
       'gamesWish' :{
@@ -152,8 +147,8 @@ angular.module('game', [
     }
   })
 
-  .state('app.user.profile', {
-    url: '/profile',
+  .state('app.user-profile', {
+    url: '/user/profile',
     views: {
       'menuContent': {
         templateUrl: 'templates/user-profile-page.html'//,

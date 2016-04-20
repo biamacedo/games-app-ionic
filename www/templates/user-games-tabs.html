@@ -12,10 +12,10 @@
 
 <ion-tabs
   ng-class="{
-  'tabs-icon-top tabs-color-active-positive': mobile.platform == 'ios',
-  'tabs-icon-left tabs-top tabs-striped tabs-positive': mobile.platform == 'android'
+  'tabs-icon-top tabs-positive': mobile.platform == 'ios',
+  'tabs-icon-only tabs-top tabs-striped tabs-positive': mobile.platform == 'android'
   }">
-  <!-- tabs-icon-only -->
+  <!-- tabs-icon-left -->
   <ion-tab title="Owned" ng-attr-icon="{{ mobile.platform == 'android' ? 'ion-ios-game-controller-a' : undefined}}"
   ng-attr-icon-off="{{ mobile.platform == 'ios' ? 'ion-ios-game-controller-a-outline' : undefined}}"
   ng-attr-icon-on="{{ mobile.platform == 'ios' ? 'ion-ios-game-controller-a' : undefined}}"
@@ -24,9 +24,9 @@
   </ion-tab>
 
   <ion-tab title="Wish List" ng-attr-icon="{{ mobile.platform == 'android' ? 'ion-android-cloud' : undefined}}"
-  ng-attr-icon-off="{{ mobile.platform == 'ios' ? 'ion-ios-cloud' : undefined}}"
-  ng-attr-icon-on="{{ mobile.platform == 'ios' ? 'ion-ios-cloud-outline' : undefined}}"
-  href="#/app/market/buy">
+  ng-attr-icon-off="{{ mobile.platform == 'ios' ? 'ion-ios-cloud-outline' : undefined}}"
+  ng-attr-icon-on="{{ mobile.platform == 'ios' ? 'ion-ios-cloud' : undefined}}"
+  href="#/app/user/games/wish">
     <ion-nav-view name="gamesWish"></ion-nav-view>
   </ion-tab>
 

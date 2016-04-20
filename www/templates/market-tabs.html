@@ -1,10 +1,10 @@
 <ion-tabs
   ng-class="{
-  'tabs-icon-top tabs-color-active-positive': mobile.platform == 'ios',
-  'tabs-icon-left tabs-top tabs-striped tabs-positive': mobile.platform == 'android'
+  'tabs-icon-top tabs-positive': mobile.platform == 'ios',
+  'tabs-icon-only tabs-top tabs-striped tabs-positive': mobile.platform == 'android'
   }">
-  <!-- tabs-icon-only -->
-  <ion-tab title="Sell" ng-attr-icon="{{ mobile.platform == 'android' ? 'ion-card' : undefined}}"
+  <!-- tabs-icon-left -->
+  <ion-tab title="Sell" ng-attr-icon="{{ mobile.platform == 'android' ? 'ion-pricetags' : undefined}}"
   ng-attr-icon-off="{{ mobile.platform == 'ios' ? 'ion-ios-pricetags-outline' : undefined}}"
   ng-attr-icon-on="{{ mobile.platform == 'ios' ? 'ion-ios-pricetags' : undefined}}"
   href="#/app/market/sell">
