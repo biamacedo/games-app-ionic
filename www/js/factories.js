@@ -1,6 +1,6 @@
 angular.module('game.factories', ['ngCordovaOauth'])
 
-.factory('UserService', ['$ionicPlatform', '$http', 'LOGIN_CONSTANTS', '$cordovaOauth', function($ionicPlatform, $http, LOGIN_CONSTANTS, $cordovaOauth) {
+.factory('UserService', ['$ionicPlatform', '$http', '$q', 'LOGIN_CONSTANTS', '$cordovaOauth', function($ionicPlatform, $http, $q, LOGIN_CONSTANTS, $cordovaOauth) {
 
   var GOOGLE_CLIENT_ID = LOGIN_CONSTANTS.GOOGLE_CLIENT_ID;
   var GOOGLE_SCOPE_EMAIL = "https://www.googleapis.com/auth/userinfo.email";
@@ -39,6 +39,7 @@ angular.module('game.factories', ['ngCordovaOauth'])
       return true;
     },
     signInFacebook: function() {
+      var deferred = $q.defer();
       $ionicPlatform.ready(function() {
         // $cordovaOauth.facebook(string clientId, array appScope, object options);
          $cordovaOauth.facebook(FACEBOOK_CLIENT_ID, FACEBOOK_SCOPES).then(function(result) {
@@ -59,19 +60,22 @@ angular.module('game.factories', ['ngCordovaOauth'])
                user.name = result.data.name;
                user.imageUrl = result.data.picture.data.url;
                console.log("User Object -> ", user);
+               deferred.resolve(user);
 
             }, function(error) {
                 alert("There was a problem getting your profile.  Check the logs for details.");
                 console.log(error);
+                deferred.reject(error);
             });
          }, function(error) {
              console.log("Error -> ", error);
+             deferred.reject(error);
          });
      });
-
-      return true;
+     return deferred.promise;
     },
     signInGoogle: function() {
+       var deferred = $q.defer();
       $ionicPlatform.ready(function() {
         // $cordovaOauth.google(string clientId, array appScope);
         $cordovaOauth.google(GOOGLE_CLIENT_ID, GOOGLE_SCOPES).then(function(result) {
@@ -86,22 +90,25 @@ angular.module('game.factories', ['ngCordovaOauth'])
               user.name = result.data.name;
               user.imageUrl = result.data.picture;
               console.log("User Object -> ", user);
+              deferred.resolve(user);
 
               return true;
             }, function(error) {
                 console.log("Error -> ", error);
-                return false;
+                deferred.reject(error);
             });
 
         }, function(error) {
             console.log("Error -> ", error);
-            return false;
+            deferred.reject(error);
         });
       });
+      return deferred.promise;
     },
     signOut: function() {
-
-      return true;
+       var deferred = $q.defer();
+       deferred.resolve(true);
+       return deferred.promise;
     }
   };
 }])

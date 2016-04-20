@@ -1,4 +1,4 @@
-angular.module('game.controllers', [])
+angular.module('game.controllers', ['ngCordova'])
 
 .controller('gmAppController', ['$scope', '$state', '$ionicHistory', function($scope, $state, $ionicHistory) {
   $scope.mobile = {};
@@ -18,7 +18,14 @@ angular.module('game.controllers', [])
   };
 }])
 
-.controller('gmLoginController', ['$scope', '$state', '$ionicHistory', '$ionicPlatform', 'UserService', function($scope, $state, $ionicHistory, $ionicPlatform, UserService) {
+.controller('gmLoginController', [
+  '$scope',
+  '$state',
+  '$ionicHistory',
+  '$ionicPlatform',
+  'UserService',
+  '$cordovaToast',
+  function($scope, $state, $ionicHistory, $ionicPlatform, UserService, $cordovaToast) {
     $scope.signIn = function(){
         console.log("Clicking on Login Button");
 
@@ -32,33 +39,32 @@ angular.module('game.controllers', [])
     $scope.signInWithFacebook = function(){
         console.log("Clicking on Facebook Login Button");
 
-        $ionicPlatform.ready(function() {
+        UserService.signInFacebook().then(function(user){
 
-          UserService.signInFacebook();
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
 
+            $state.transitionTo("app.main");
+        }, function(error){
+          $cordovaToast.showLongBottom('Login Error: ' + error);
         });
 
-        // $ionicHistory.nextViewOptions({
-        //   disableBack: true
-        // });
-        //
-        // $state.transitionTo("app.main");
     };
 
     $scope.signInWithGoogle = function(){
         console.log("Clicking on Google Login Button");
 
-        $ionicPlatform.ready(function() {
+        UserService.signInGoogle().then(function(user){
 
-          UserService.signInGoogle();
+            $ionicHistory.nextViewOptions({
+              disableBack: true
+            });
 
+            $state.transitionTo("app.main");
+        }, function(error){
+          $cordovaToast.showLongBottom('Login Error: ' + error);
         });
-
-        // $ionicHistory.nextViewOptions({
-        //   disableBack: true
-        // });
-        //
-        // $state.transitionTo("app.main");
     };
 
 }])
