@@ -1,4 +1,108 @@
-angular.module('game.factories', [])
+angular.module('game.factories', ['ngCordovaOauth'])
+
+.factory('UserService', ['$ionicPlatform', '$http', 'LOGIN_CONSTANTS', '$cordovaOauth', function($ionicPlatform, $http, LOGIN_CONSTANTS, $cordovaOauth) {
+
+  var GOOGLE_CLIENT_ID = LOGIN_CONSTANTS.GOOGLE_CLIENT_ID;
+  var GOOGLE_SCOPE_EMAIL = "https://www.googleapis.com/auth/userinfo.email";
+  var GOOGLE_SCOPE_PROFILE = "https://www.googleapis.com/auth/userinfo.profile";
+  var GOOGLE_SCOPES = [GOOGLE_SCOPE_EMAIL, GOOGLE_SCOPE_PROFILE];
+  var GOOGLE_GET_INFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo?fields=email%2Cname%2Cpicture&access_token=";
+
+  var FACEBOOK_CLIENT_ID = LOGIN_CONSTANTS.FACEBOOK_CLIENT_ID;
+  var FACEBOOK_SCOPES = ["email", "public_profile"];
+  var FACEBOOK_GET_INFO_URL = "https://graph.facebook.com/v2.2/me";
+  var FACEBOOK_GET_INFO_FIELDS = "id,name,email,picture";
+
+  var user = {
+    email: 'dummy@yahoo.net',
+    name: 'John Dummy',
+    imageUrl: 'https://placehold.it/350x350',
+    games: {
+      favorites: [],
+      owned: [],
+      wishListed: []
+    },
+    profile: {
+      rating: 5,
+      sales: 0,
+      bought: 0,
+      qualifications: []
+    }
+  };
+
+  return {
+    current: function() {
+      return user;
+    },
+    signIn: function() {
+
+      return true;
+    },
+    signInFacebook: function() {
+      $ionicPlatform.ready(function() {
+        // $cordovaOauth.facebook(string clientId, array appScope, object options);
+         $cordovaOauth.facebook(FACEBOOK_CLIENT_ID, FACEBOOK_SCOPES).then(function(result) {
+             console.log("Response Token Object -> ", result);
+
+             user.accessToken = result.access_token;
+
+             $http.get(FACEBOOK_GET_INFO_URL, {
+               params: {
+                 access_token: result.access_token,
+                 fields: FACEBOOK_GET_INFO_FIELDS,
+                 format: "json"
+               }}).then(function(result) {
+
+               user.email = result.data.email;
+               user.name = result.data.name;
+               user.imageUrl = result.data.picture.data.url;
+               console.log("User Object -> ", user);
+
+            }, function(error) {
+                alert("There was a problem getting your profile.  Check the logs for details.");
+                console.log(error);
+            });
+         }, function(error) {
+             console.log("Error -> ", error);
+         });
+     });
+
+      return true;
+    },
+    signInGoogle: function() {
+      $ionicPlatform.ready(function() {
+        // $cordovaOauth.google(string clientId, array appScope);
+        $cordovaOauth.google(GOOGLE_CLIENT_ID, GOOGLE_SCOPES).then(function(result) {
+            console.log("Response Token Object -> ", result);
+
+            user.accessToken = result.access_token;
+
+            $http.get(GOOGLE_GET_INFO_URL + result.access_token).then(function(result){
+              console.log("Response Info Object -> ", result);
+
+              user.email = result.data.email;
+              user.name = result.data.name;
+              user.imageUrl = result.data.picture;
+              console.log("User Object -> ", user);
+
+              return true;
+            }, function(error) {
+                console.log("Error -> ", error);
+                return false;
+            });
+
+        }, function(error) {
+            console.log("Error -> ", error);
+            return false;
+        });
+      });
+    },
+    signOut: function() {
+
+      return true;
+    }
+  };
+}])
 
 .factory('ManufacturerService', function() {
   // Might use a resource here that returns a JSON array

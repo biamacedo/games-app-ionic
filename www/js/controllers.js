@@ -1,13 +1,25 @@
 angular.module('game.controllers', [])
 
-.controller('gmAppController', function($scope) {
+.controller('gmAppController', ['$scope', '$state', '$ionicHistory', function($scope, $state, $ionicHistory) {
   $scope.mobile = {};
   $scope.mobile.platform = ionic.Platform.platform();
   console.log('Phone is:', $scope.mobile.platform);
-})
 
-.controller('gmLoginController', ['$scope', '$state', '$ionicHistory', function($scope, $state, $ionicHistory) {
-    $scope.login = function(){
+
+  // Side Menu Functions
+  $scope.signOut = function(){
+      console.log("Clicking on Sign Out Button");
+
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+
+      $state.transitionTo("login");
+  };
+}])
+
+.controller('gmLoginController', ['$scope', '$state', '$ionicHistory', '$ionicPlatform', 'UserService', function($scope, $state, $ionicHistory, $ionicPlatform, UserService) {
+    $scope.signIn = function(){
         console.log("Clicking on Login Button");
 
         $ionicHistory.nextViewOptions({
@@ -17,6 +29,37 @@ angular.module('game.controllers', [])
         $state.transitionTo("app.main");
     };
 
+    $scope.signInWithFacebook = function(){
+        console.log("Clicking on Facebook Login Button");
+
+        $ionicPlatform.ready(function() {
+
+          UserService.signInFacebook();
+
+        });
+
+        // $ionicHistory.nextViewOptions({
+        //   disableBack: true
+        // });
+        //
+        // $state.transitionTo("app.main");
+    };
+
+    $scope.signInWithGoogle = function(){
+        console.log("Clicking on Google Login Button");
+
+        $ionicPlatform.ready(function() {
+
+          UserService.signInGoogle();
+
+        });
+
+        // $ionicHistory.nextViewOptions({
+        //   disableBack: true
+        // });
+        //
+        // $state.transitionTo("app.main");
+    };
 
 }])
 

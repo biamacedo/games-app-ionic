@@ -1,8 +1,16 @@
 <ion-view view-title="Login" hide-nav-bar="true">
   <ion-content class="padding">
     <h1 id="login-title">GameStart</h1>
-    <button id="login-button" ng-click="login()" class="button button-outline button-block button-positive">
+    <button id="login-button" ng-click="signIn()" class="button button-outline button-block button-stable">
       Login
+    </button>
+
+    <button id="login-button" ng-click="signInWithFacebook()" class="button button-outline button-block button-positive">
+      Login with Facebook
+    </button>
+
+    <button id="login-button" ng-click="signInWithGoogle()" class="button button-outline button-block button-assertive">
+      Login with Google
     </button>
   </ion-content>
 </ion-view>

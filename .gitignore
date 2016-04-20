@@ -4,3 +4,7 @@
 node_modules/
 platforms/
 plugins/
+
+
+# Files with sensitive information that should stay out of github
+www/js/constants.js

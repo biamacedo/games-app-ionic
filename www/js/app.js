@@ -7,6 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('game', [
     'ionic',
+    'game.constants',
     'game.directives',
     'game.controllers',
     'game.factories'])

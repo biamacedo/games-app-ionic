@@ -1,7 +1,12 @@
-# Games App
-###### Projeto Final | Módulo 2 / Bloco Multiplataforma | Infnet Pós Graduação
+# GameStart App
+###### Final Project | Module 2 / Cross-Platform Block | Infnet Master in Technology - Mobile Development
 
-Games app is a catalog for console games and a social network for people who enjoy collecting and playing game.
+GameStart is a catalog for console games and a social network for people who enjoy collecting and playing game.
+
+## API Keys & Login Client IDs
+
+Changes necessary before using/running this project:
+* Rename the file **constants-template.js** to **constants.js** on "www/js/" and change **&#60;GOOGLE_CLIENT_ID&#62;** and **&#60;FACEBOOK_CLIENT_ID&#62;** to your app credentials
 
 ## Functionalities
 
