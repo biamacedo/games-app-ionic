@@ -4,8 +4,8 @@
     <ion-nav-bar class="bar-positive">
       <ion-nav-back-button class="button-clear">
         <i class="icon" ng-class="{
-        'ion-ios-arrow-back': platform !== 'android',
-        'ion-android-arrow-back': platform == 'android'
+        'ion-ios-arrow-back': mobile.platform !== 'android',
+        'ion-android-arrow-back': mobile.platform == 'android'
       }"></i>
     </ion-nav-back-button>
     </ion-nav-bar>
@@ -18,29 +18,32 @@
     </header>
     <ion-content class="has-header" overflow-scroll="false">
       <ion-list>
+        <ion-item class="item-avatar" nav-clear menu-close href="#/app/profile">
+          <img src="http://data.whicdn.com/images/183719767/large.jpg" />
+          <!-- "http://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user-150x150.png"> -->
+          <h2>John Snow</h2>
+          <p>I know nothing.</p>
+        </ion-item>
+        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/games">
+          My Games
+          <span class="badge badge-assertive">23</span>
+          <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
+        </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/">
-          Games
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </ion-item>
-        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/profile">
-          Profile
-          <i class="icon ion-chevron-right icon-accessory"></i>
-        </ion-item>
-        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/user/games">
-          User Games
-          <i class="icon ion-chevron-right icon-accessory"></i>
+          Home
+          <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
         </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/market">
           Market
-          <i class="icon ion-chevron-right icon-accessory"></i>
+          <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
         </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/settings">
           Settings
-          <i class="icon ion-chevron-right icon-accessory"></i>
+          <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
         </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close ng-click="signOut()">
           Sign Out
-          <i class="icon ion-chevron-right icon-accessory"></i>
+          <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
         </ion-item>
       </ion-list>
     </ion-content>

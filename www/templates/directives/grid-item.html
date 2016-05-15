@@ -1,0 +1,19 @@
+<div class="grid-item"
+     ng-class="{
+              'on-left': item.onLeft === true,
+              'on-right': item.onRight === true
+             }"
+  >
+    <div class="image-wrapper"
+         ng-style="{backgroundImage: 'url(\'' + item.image + '\')'}"
+         ng-click="onClick && onClick()"
+    >
+    <header>
+      <h4>{{item.itemName}}</h4>
+      <!-- <p>Last picture taken {{item.lastPictureTaken}}</p> -->
+    </header>
+    <!-- <footer>
+      <p><i class="icon ion-camera"></i> {{item.picsCount}}</p>
+    </footer> -->
+  </div>
+</div>

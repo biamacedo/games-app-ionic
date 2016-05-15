@@ -121,8 +121,8 @@ angular.module('game', [
     }
   })
 
-  .state('app.user-games', {
-    url: '/user/games',
+  .state('app.games', {
+    url: '/games',
     views: {
       'menuContent' :{
         templateUrl: 'templates/user-games-tabs.html'
@@ -130,7 +130,7 @@ angular.module('game', [
     }
   })
 
-  .state('app.user-games.owned', {
+  .state('app.games.owned', {
     url: '/owned',
     views: {
       'gamesOwned' :{
@@ -139,7 +139,7 @@ angular.module('game', [
     }
   })
 
-  .state('app.user-games.wish', {
+  .state('app.games.wish', {
     url: '/wish',
     views: {
       'gamesWish' :{
@@ -148,8 +148,8 @@ angular.module('game', [
     }
   })
 
-  .state('app.user-profile', {
-    url: '/user/profile',
+  .state('app.profile', {
+    url: '/profile',
     views: {
       'menuContent': {
         templateUrl: 'templates/user-profile-page.html'//,
