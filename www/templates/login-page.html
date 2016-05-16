@@ -1,16 +1,47 @@
 <ion-view view-title="Login" hide-nav-bar="true">
-  <ion-content class="padding">
-    <h1 id="login-title">GameStart</h1>
-    <button id="login-button" ng-click="signIn()" class="button button-outline button-block button-stable">
-      Login
-    </button>
+  <ion-content id="login-page" class="padding has-footer" scroll="false">
+    <h1 id="login-title">Game Start</h1>
+      <a id="temp-button" ng-click="signIn()" class="bar-game">
+        Login
+      </a>
 
-    <button id="login-button" ng-click="signInWithFacebook()" class="button button-outline button-block button-positive">
+    <!-- <button id="login-button" ng-click="signInWithFacebook()" class="button button-outline button-block button-positive">
       Login with Facebook
     </button>
 
     <button id="login-button" ng-click="signInWithGoogle()" class="button button-outline button-block button-assertive">
       Login with Google
-    </button>
+    </button> -->
+
   </ion-content>
+  <!-- <ion-footer-bar align-title="left" class="bar-game">
+    <div class="buttons">
+        <button id="login-button" ng-click="signInWithFacebook()" class="button button-positive">
+          Login with Facebook
+        </button>
+    </div>
+    <div class="title">
+      <button id="login-button" ng-click="signIn()" class="button button-block button-stable">
+        Login
+      </button>
+    </div>
+    <div class="buttons">
+        <button id="login-button" ng-click="signInWithGoogle()" class="button button-assertive">
+          Login with Google
+        </button>
+    </div>
+  </ion-footer-bar> -->
+  <ion-footer-bar class="bar bar-game">
+  	<div class="button-bar">
+  		<!-- <a class="button button-dark icon-left ion-checkmark">Add Location</a>
+  		<a class="button button-dark icon-left ion-close">Summary</a> -->
+
+      <a id="login-button" ng-click="signInWithFacebook()" class="button button-positive">
+        Login with Facebook
+      </a>
+      <a id="login-button" ng-click="signInWithGoogle()" class="button button-assertive">
+        Login with Google
+      </a>
+  	</div>
+  </ion-footer-bar>
 </ion-view>

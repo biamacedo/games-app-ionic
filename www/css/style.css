@@ -1,1 +1,44 @@
 /* Empty. Add your own CSS if you like */
+
+#login-page {
+  background-image: url("../img/background-login-no-bottom.png");
+  /*background-position: center 50px;*/
+  background-size: cover;
+  background-repeat: no-repeat
+  background-attachment: fixed;
+  background-position: center;
+}
+
+/*LOGIN PAGE*/
+#login-title {
+  margin-top: 70px;
+  margin-bottom: 70px;
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  color: #444444;
+  font-size: 3em;
+  text-shadow: 3.5px 3.5px #4D9355;
+}
+
+.bar-game {
+  background-color: #53AA5D !important;
+  color: #444444;
+  border-color: transparent !important;
+  border-top: transparent !important;
+}
+
+.badge-game {
+  color: #444444;
+}
+
+.text-wrap{
+  white-space: normal !important;
+}
+
+#temp-button {
+color: #53AA5D;
+}
+
+#image-card {
+
+}

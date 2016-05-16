@@ -1,7 +1,7 @@
 <ion-side-menus>
 
   <ion-pane ion-side-menu-content>
-    <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-game">
       <ion-nav-back-button class="button-clear">
         <i class="icon" ng-class="{
         'ion-ios-arrow-back': mobile.platform !== 'android',
@@ -18,11 +18,11 @@
     </header>
     <ion-content class="has-header" overflow-scroll="false">
       <ion-list>
-        <ion-item class="item-avatar" nav-clear menu-close href="#/app/profile">
-          <img src="http://data.whicdn.com/images/183719767/large.jpg" />
-          <!-- "http://www.golenbock.com/wp-content/uploads/2015/01/placeholder-user-150x150.png"> -->
-          <h2>John Snow</h2>
-          <p>I know nothing.</p>
+        <ion-item class="item-avatar item-icon-left item-icon-right" nav-clear menu-close href="#/app/profile">
+          <img ng-src="{{user.imageUrl}}" />
+          <h2>{{user.name}}</h2>
+          <p>{{user.level.status}}</p>
+          <span class="badge badge-game ">0</span>
         </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/games">
           My Games

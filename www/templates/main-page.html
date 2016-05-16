@@ -1,14 +1,23 @@
-<ion-view view-title="GameStart" hide-nav-bar="false">
+<ion-view view-title="Game Start" hide-nav-bar="false">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content class="">
-
-    <div class="grid">
+    <div class="list">
       <div ng-repeat="manufacturer in manufacturers">
 
-        <a href="#/app/platform/list/{{manufacturer.id}}">{{manufacturer.name}}</a><br>
+            <div ng-click="go('/app/platform/list/{{manufacturer.id}}')" class="card">
+              <div class="item">
+                <h2>{{manufacturer.name}}</h2>
+              </div>
 
+              <div class="item item-image">
+                <img class="image-card" ng-src="{{manufacturer.company_logo.url}}">
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
   </ion-content>

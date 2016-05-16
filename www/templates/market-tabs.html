@@ -1,7 +1,7 @@
 <ion-tabs
   ng-class="{
-  'tabs-icon-top tabs-positive': mobile.platform == 'ios',
-  'tabs-icon-only tabs-top tabs-striped tabs-positive': mobile.platform == 'android'
+  'tabs-icon-top': mobile.platform == 'ios',
+  'tabs-icon-only tabs-top tabs-striped': mobile.platform == 'android'
   }">
   <!-- tabs-icon-left -->
   <ion-tab title="Sell" ng-attr-icon="{{ mobile.platform == 'android' ? 'ion-pricetags' : undefined}}"

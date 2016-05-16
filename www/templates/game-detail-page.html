@@ -5,7 +5,44 @@
   The Friends service returns an array of friend data
 -->
 <ion-view view-title="{{game.name}}">
+    <ion-nav-buttons side="right">
+      <button class="button button-icon icon" ng-class="{
+        'ion-ios-star': mobile.platform == 'ios' && isFavorite(),
+        'ion-ios-star-outline': mobile.platform == 'ios' && !isFavorite(),
+        'ion-android-star': mobile.platform == 'android' && isFavorite(),
+        'ion-android-star-outline': mobile.platform == 'android' && !isFavorite()
+      }" ng-click="favoriteToggle()">
+      </button>
+      <button class="button button-icon icon" ng-class="{
+        'ion-ios-game-controller-a': isOwned(),
+        'ion-ios-game-controller-a-outline': !isOwned()
+      }" ng-click="ownToggle()">
+      </button>
+      <button class="button button-icon icon" ng-class="{
+        'ion-ios-cloud':  isWished(),
+        'ion-ios-cloud-outline': !isWished()
+      }" ng-click="wishToggle()">
+      </button>
+    </ion-nav-buttons>
   <ion-content class="padding">
-    <img ng-src="{{game.img}}" style="width: 64px; height: 64px">
+    <div class="list card">
+
+    <div class="item item-thumbnail-left">
+      <img src="{{game.cover.url}}">
+      <h2 class="text-wrap">{{game.name}}</h2>
+      <p ng-repeat="publisher in game.companies" ng-if="publisher.publisher == true">{{publisher.name}}</p>
+      <p ng-repeat="release in game.release_dates">{{release.platform_name}}: {{release.release_date}}</p>
+      <p ng-repeat="genres in game.genres">{{genres.name}} <span ng-if="!($last)">|</span></p>
+    </div>
+
+    <div class="item item-body">
+      <p>{{game.synopsis}}</p>
+      <p>
+        <a href="#" class="subdued">Rating: {{game.rating | number:2}}</a>
+        <a href="#" class="subdued">5 Comments</a>
+      </p>
+    </div>
+
+  </div>
   </ion-content>
 </ion-view>

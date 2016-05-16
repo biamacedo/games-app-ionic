@@ -1,9 +1,17 @@
 <ion-view view-title="{{manufacturer}} Consoles">
   <ion-content class="">
-    <div class="grid">
+    <div class="list">
       <div ng-repeat="platform in platforms">
 
-        <a href="#/app/game/list/{{platform.id}}">{{platform.name}} - {{platform.manufacturer}}</a><br>
+            <div ng-click="go('/app/game/list/{{platform.id}}')" class="card">
+              <div class="item">
+                <h2>{{platform.name}}</h2>
+              </div>
+
+              <div class="item item-image">
+                <img ng-src="{{platform.image}}">
+              </div>
+            </div>
 
       </div>
     </div>

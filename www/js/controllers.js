@@ -1,10 +1,19 @@
 angular.module('game.controllers', ['ngCordova'])
 
-.controller('gmAppController', ['$scope', '$state', '$ionicHistory', function($scope, $state, $ionicHistory) {
+.controller('gmAppController', ['$scope', '$state', '$location', '$ionicHistory', 'UserService', function($scope, $state, $location, $ionicHistory, UserService) {
   $scope.mobile = {};
   $scope.mobile.platform = ionic.Platform.platform();
   console.log('Phone is:', $scope.mobile.platform);
 
+  $scope.go = function(path){
+    console.log("Moving to path: "+ path);
+      $location.path(path);
+  };
+
+  $scope.updateUser = function(){
+    $scope.user = UserService.current();
+  };
+  $scope.updateUser();
 
   // Side Menu Functions
   $scope.signOut = function(){
@@ -69,10 +78,11 @@ angular.module('game.controllers', ['ngCordova'])
 
 }])
 
-.controller('gmMainController', ['$scope', '$state', 'ManufacturerService' , function($scope, $state, ManufacturerService) {
+.controller('gmMainController', ['$scope', '$state', 'UserService', 'ManufacturerService' , function($scope, $state, UserService, ManufacturerService) {
+    $scope.user = UserService.current();
+
 
     $scope.manufacturers = ManufacturerService.all();
-
 
 }])
 
@@ -95,33 +105,95 @@ angular.module('game.controllers', ['ngCordova'])
 
 }])
 
-.controller('gmGameDetailController', ['$scope', '$state', '$stateParams', 'GameService' , function($scope, $state, $stateParams, GameService) {
-    var gameId = $stateParams.gameId;
+.controller('gmGameDetailController', [
+  '$scope',
+  '$state',
+  '$stateParams',
+  'UserService',
+  'GameService',
+  '$cordovaToast',
+function($scope, $state, $stateParams, UserService, GameService, $cordovaToast) {
+    var gameIndexId = $stateParams.gameId;
 
-    $scope.game = GameService.get(gameId);
+    $scope.game = GameService.get(gameIndexId);
+
+    var gameId = angular.copy($scope.game.id);
+
+    $scope.isFavorite = function(){
+      return UserService.user.hasFavorite(gameId);
+    };
+    $scope.favoriteToggle = function(){
+      if (!$scope.isFavorite()){
+          UserService.user.addFavorite(gameId);
+          $cordovaToast.showLongBottom('Game Favorited!');
+      } else {
+          UserService.user.removeFavorite(gameId);
+          $cordovaToast.showLongBottom('Game Un-Favorited!');
+      }
+    };
+
+    $scope.isOwned = function(){
+      console.log("isOwned");
+      return UserService.user.hasOwned(gameId);
+    };
+    $scope.ownToggle = function(){
+      if (!$scope.isOwned()){
+          UserService.user.addOwned(gameId);
+          $cordovaToast.showLongBottom('Game added to Owned List!');
+      } else {
+          UserService.user.removeOwned(gameId);
+          $cordovaToast.showLongBottom('Game removed to Owned List!');
+      }
+    };
+
+    $scope.isWished = function(){
+      return UserService.user.hasWished(gameId);
+    };
+    $scope.wishToggle = function(){
+      if (!$scope.isWished()){
+          UserService.user.addWished(gameId);
+          $cordovaToast.showLongBottom('Game added to Wish List!');
+      } else {
+          UserService.user.removeWished(gameId);
+          $cordovaToast.showLongBottom('Game removed to Wish List!');
+      }
+    };
+
 
 }])
 
-.controller('DashCtrl', function($scope) {})
+.controller('gmUserProfileCtrl', ['$scope', 'UserService', '$cordovaToast', function($scope, UserService, $cordovaToast) {
+  console.log("gmUserProfileCtrl");
+  $scope.user = UserService.current();
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+  $scope.editComment = {
+    comment: "",
+    rating: 1,
+    user: {
+      name: $scope.user.name
+    }
   };
-})
+  console.log($scope.editComment.rating);
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+  $scope.qualificateRatingStar = function(rating){
+    console.log("Setting Rating");
+    console.log(rating);
+    $scope.editComment.rating = rating;
+      console.log($scope.editComment.rating);
+  };
+
+  $scope.sendQualification = function(){
+    console.log("Sending Qualification");
+    console.log($scope.editComment.comment);
+    var sendComment =  angular.copy($scope.editComment);
+    UserService.user.addQualification(sendComment);
+    $cordovaToast.showLongBottom('Qualification Added!');
+    $scope.user = UserService.current();
+    $scope.editComment.comment = "";
+    $scope.editComment.rating = 1;
+  };
+
+}])
 
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {

@@ -152,8 +152,8 @@ angular.module('game', [
     url: '/profile',
     views: {
       'menuContent': {
-        templateUrl: 'templates/user-profile-page.html'//,
-        // controller: 'AccountCtrl'
+        templateUrl: 'templates/user-profile-page.html',
+        controller: 'gmUserProfileCtrl'
       }
     }
   })

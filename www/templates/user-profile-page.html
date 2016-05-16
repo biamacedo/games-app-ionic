@@ -3,27 +3,109 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-content class="">
-    <div class="list card">
 
-      <div class="item item-avatar">
-        <img src="http://data.whicdn.com/images/183719767/large.jpg">
-        <h2>John Snow</h2>
-        <p>I know nothing.</p>
+    <div class="list">
+      <div class="card">
+
+        <div class="item item-avatar">
+          <img ng-src="{{user.imageUrl}}" />
+          <h2>{{user.name}}</h2>
+          <p><span class="level-number">{{user.level.number}}</span> - {{user.level.status}}</p>
+        </div>
+
+        <div class="item item-body">
+          <div class="list">
+            <a class="item item-borderless item-icon-left" href="#">
+              <i class="icon ion-ios-star-outline"></i>
+                Favorite Games
+              <span class="badge badge-assertive">{{user.games.favorites.length}}</span>
+            </a>
+            <a class="item item-borderless item-icon-left" href="#">
+              <i class="icon ion-ios-game-controller-a-outline"></i>
+              Games Owned
+              <span class="badge badge-assertive">{{user.games.owned.length}}</span>
+            </a>
+            <a class="item item-borderless item-icon-left" href="#">
+              <i class="icon ion-ios-cloud-outline"></i>
+              Games on Wish List
+              <span class="badge badge-assertive">{{user.games.wishListed.length}}</span>
+            </a>
+            </div>
+
+        </div>
+        <div class="item item-divider">
+          Qualifications
+        </div>
+
       </div>
 
-      <div class="item item-body">
-        <img class="full-image" src="http://3g28wn33sno63ljjq514qr87.wpengine.netdna-cdn.com/wp-content/uploads/2015/11/game-of-thrones-wall.jpg">
-        <p>
-          This is a "Facebook" styled Card. The header is created from a Thumbnail List item,
-          the content is from a card-body consisting of an image and paragraph text. The footer
-          consists of tabs, icons aligned left, within the card-footer.
-        </p>
-        <p>
-          <a href="#" class="subdued">1 Like</a>
-          <a href="#" class="subdued">5 Comments</a>
-        </p>
+      <div class="card" ng-show="user.profile.qualifications.length <= 0">
+        <div class="item item-text-wrap text-center">
+          No qualifications yet!
+        </div>
       </div>
 
+      <div class="card" ng-repeat="qualification in user.profile.qualifications">
+        <div class="item item-text-wrap">
+          {{qualification.comment}} | {{qualification.rating}}
+          <i class="icon" ng-class="{
+            'ion-ios-star': mobile.platform == 'ios',
+            'ion-android-star': mobile.platform == 'android'
+          }"></i>
+        </div>
+        <div class="item">
+          - {{qualification.user.name}}
+        </div>
+      </div>
+
+      <div class="card">
+        <label class="item item-input">
+          <textarea placeholder="Comments" ng-model="editComment.comment"></textarea>
+        </label>
+
+        <p class="rating text-center">
+            <a class="button button-icon icon star star-1" ng-class="{
+              'ion-ios-star': mobile.platform == 'ios' && editComment.rating >= 1,
+              'ion-ios-star-outline': mobile.platform == 'ios' && editComment.rating < 1,
+              'ion-android-star': mobile.platform == 'android' && editComment.rating >= 1,
+              'ion-android-star-outline': mobile.platform == 'android' && editComment.rating < 1
+            }" ng-click="qualificateRatingStar(1)"></a>
+            <a class="button button-icon icon star star-2" ng-class="{
+              'ion-ios-star': mobile.platform == 'ios' && editComment.rating >= 2,
+              'ion-ios-star-outline': mobile.platform == 'ios' && editComment.rating < 2,
+              'ion-android-star': mobile.platform == 'android' && editComment.rating >= 2,
+              'ion-android-star-outline': mobile.platform == 'android' && editComment.rating < 2
+            }" ng-click="qualificateRatingStar(2)"></a>
+            <a class="button button-icon icon star star-3" ng-class="{
+              'ion-ios-star': mobile.platform == 'ios' && editComment.rating >= 3,
+              'ion-ios-star-outline': mobile.platform == 'ios' && editComment.rating < 3,
+              'ion-android-star': mobile.platform == 'android' && editComment.rating >= 3,
+              'ion-android-star-outline': mobile.platform == 'android' && editComment.rating < 3
+            }" ng-click="qualificateRatingStar(3)"></a>
+            <a class="button button-icon icon star star-4" ng-class="{
+              'ion-ios-star': mobile.platform == 'ios' && editComment.rating >= 4,
+              'ion-ios-star-outline': mobile.platform == 'ios' && editComment.rating < 4,
+              'ion-android-star': mobile.platform == 'android' && editComment.rating >= 4,
+              'ion-android-star-outline': mobile.platform == 'android' && editComment.rating < 4
+            }" ng-click="qualificateRatingStar(4)"></a>
+            <a class="button button-icon icon star star-5" ng-class="{
+              'ion-ios-star': mobile.platform == 'ios' && editComment.rating >= 5,
+              'ion-ios-star-outline': mobile.platform == 'ios' && editComment.rating < 5,
+              'ion-android-star': mobile.platform == 'android' && editComment.rating >= 5,
+              'ion-android-star-outline': mobile.platform == 'android' && editComment.rating < 5
+            }" ng-click="qualificateRatingStar(5)"></a>
+        </p>
+
+        <div class="item item-avatar item-icon-right">
+          <img ng-src="{{user.imageUrl}}" style />
+          <p>Me</p>
+          <a class="button button-icon icon" ng-class="{
+            'ion-ios-paperplane': mobile.platform == 'ios',
+            'ion-android-send': mobile.platform == 'android'
+          }" ng-click="sendQualification()"></a>
+        </div>
+      </div>
     </div>
+
   </ion-content>
 </ion-view>
