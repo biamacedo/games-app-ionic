@@ -31,8 +31,18 @@
   color: #444444;
 }
 
+.back-text{
+  color: #444444 !important;
+}
+
 .text-wrap{
   white-space: normal !important;
+}
+
+.grid-image {
+    width: 100%;
+    height: 180px;
+    object-fit: contain;
 }
 
 #temp-button {

@@ -1,6 +1,6 @@
-angular.module('game.factories', ['ngCordovaOauth'])
+angular.module('game.factories', ['ngCordovaOauth', 'ngStorage'])
 
-.factory('UserService', ['$ionicPlatform', '$http', '$q', 'LOGIN_CONSTANTS', '$cordovaOauth', function($ionicPlatform, $http, $q, LOGIN_CONSTANTS, $cordovaOauth) {
+.factory('UserService', ['$ionicPlatform', '$http', '$q', 'LOGIN_CONSTANTS', '$cordovaOauth', 'StorageService', function($ionicPlatform, $http, $q, LOGIN_CONSTANTS, $cordovaOauth, StorageService) {
 
   var GOOGLE_CLIENT_ID = LOGIN_CONSTANTS.GOOGLE_CLIENT_ID;
   var GOOGLE_SCOPE_EMAIL = "https://www.googleapis.com/auth/userinfo.email";
@@ -34,12 +34,25 @@ angular.module('game.factories', ['ngCordovaOauth'])
     }
   };
 
+  var save = function(){
+    StorageService.set('currentUser', user);
+  };
+
+  var retrieveUser = function(){
+    console.log("retrieveUser");
+    console.log(StorageService.get('currentUser'));
+    return StorageService.get('currentUser');
+  };
+
   return {
     current: function() {
       return user;
     },
+    save: function(){
+      save();
+    },
     signIn: function() {
-
+      user = retrieveUser();
       return true;
     },
     signInFacebook: function() {
@@ -61,10 +74,15 @@ angular.module('game.factories', ['ngCordovaOauth'])
                }}).then(function(result) {
 
                user = new User(result.data.email, result.data.name, result.data.picture.data.url);
+               var temp = retrieveUser();
+               if (temp !== null){
+                 user = temp;
+               }
               //  user.email = result.data.email;
               //  user.name = result.data.name;
               //  user.imageUrl = result.data.picture.data.url;
                console.log("User Object -> ", user);
+               save();
                deferred.resolve(user);
 
             }, function(error) {
@@ -92,10 +110,15 @@ angular.module('game.factories', ['ngCordovaOauth'])
               console.log("Response Info Object -> ", result);
 
               user = new User(result.data.email, result.data.name, result.data.picture);
+              var temp = retrieveUser();
+              if (temp !== null){
+                user = temp;
+              }
               // user.email = result.data.email;
               // user.name = result.data.name;
               // user.imageUrl = result.data.picture;
               console.log("User Object -> ", user);
+              save();
               deferred.resolve(user);
 
               return true;
@@ -118,54 +141,48 @@ angular.module('game.factories', ['ngCordovaOauth'])
     },
     user: {
       hasFavorite: function(gameId) {
-        console.log("Game ID: ",gameId);
-        console.log("Before Checking", user.games.favorites);
         return _.contains(user.games.favorites, gameId);
       },
       addFavorite: function(gameId) {
-        console.log(gameId);
-          console.log("Before Adding", user.games.favorites);
         user.games.favorites.push(gameId);
-          console.log("After Adding", user.games.favorites);
+        save();
       },
       removeFavorite: function(gameId) {
         user.games.favorites =  _.reject(user.games.favorites, function(num){ return num  == gameId; });
+        save();
       },
       hasOwned: function(gameId) {
         return _.contains(user.games.owned, gameId);
       },
       addOwned: function(gameId) {
         user.games.owned.push(gameId);
+        save();
       },
       removeOwned: function(gameId) {
         user.games.owned =  _.reject(user.games.owned, function(num){ return num  == gameId; });
+        save();
       },
       hasWished: function(gameId) {
         return _.contains(user.games.wishListed, gameId);
       },
       addWished: function(gameId) {
         user.games.wishListed.push(gameId);
+        save();
       },
       removeWished: function(gameId) {
         user.games.wishListed =  _.reject(user.games.wishListed, function(num){ return num  == gameId; });
+        save();
       },
       addQualification: function(comment) {
         user.profile.qualifications.push(comment);
+        save();
       }
     }
   };
 }])
 
 .factory('ManufacturerService', ['API_CONSTANTS', function(API_CONSTANTS) {
-  // Might use a resource here that returns a JSON array
-  var pagination = {
-    limit: 30,
-    offset : 0
-  };
 
-  // var manufacturers = [];
-
-  // Some fake testing data
   var manufacturers = [
   {
     id: 70,
@@ -192,18 +209,6 @@ angular.module('game.factories', ['ngCordovaOauth'])
       height: 400
     }
   }, {
-    id: 37,
-    name: "Capcom",
-    slug: "capcom",
-    average_rating: "7.96955871700374",
-    founded_year: 1979,
-    parent: null,
-    company_logo: {
-      url: "//res.cloudinary.com/igdb/image/upload/t_logo_med/hcbqwbhbmrabsfk600zs.png",
-      width: 5592,
-      height: 1024
-    }
-  }, {
     id: 128,
     name: "Microsoft",
     slug: "microsoft",
@@ -226,18 +231,6 @@ angular.module('game.factories', ['ngCordovaOauth'])
       url: "//upload.wikimedia.org/wikipedia/commons/5/58/Atari_Official_2012_Logo.svg",
       width: 1023,
       height: 1125
-    }
-  }, {
-    id: 248,
-    name: "Bandai Namco Entertainment",
-    slug: "bandai-namco-entertainment",
-    average_rating: "8.09211773808564",
-    founded_year: 1955,
-    parent: null,
-    company_logo: {
-      url: "//res.cloudinary.com/igdb/image/upload/t_logo_med/m3mj346jzlrjwhtdven7.png",
-      width: 450,
-      height: 375
     }
   }, {
     id: 112,
@@ -269,34 +262,241 @@ angular.module('game.factories', ['ngCordovaOauth'])
 }])
 
 .factory('PlatformService', function() {
-  // Might use a resource here that returns a JSON array
 
-  // Some fake testing data
   var platforms = [{
-    id: 0,
-    name: 'GameBoy',
-    manufacturer: 'Nintendo',
-    image: 'http://placehold.it/350x150'
-  }, {
-    id: 1,
-    name: 'Xbox One',
-    manufacturer: 'Microsoft',
-    image: 'http://placehold.it/350x150'
-  }, {
-    id: 2,
-    name: 'PlayStation 4',
+    id: 7,
+    name: "PlayStation",
+    manufacturerID: 45,
     manufacturer: 'Sony',
-    image: 'http://placehold.it/350x150'
+    slug: "ps",
+    image: '//upload.wikimedia.org/wikipedia/commons/3/39/PSX-Console-wController.jpg'
   }, {
-    id: 3,
-    name: 'New 3DS',
+    id: 8,
+    name: "PlayStation 2",
+    manufacturerID: 45,
+    manufacturer: 'Sony',
+    slug: "ps2",
+    image: '//upload.wikimedia.org/wikipedia/commons/3/39/PS2-Versions.png'
+  }, {
+    id: 9,
+    name: "PlayStation 3",
+    manufacturerID: 45,
+    manufacturer: 'Sony',
+    slug: "ps3",
+    image: '//upload.wikimedia.org/wikipedia/commons/d/d3/PS3Versions.png'
+  },  {
+    id: 48,
+    name: "PlayStation 4",
+    manufacturerID: 45,
+    manufacturer: 'Sony',
+    slug: "ps4--1",
+    image: '//upload.wikimedia.org/wikipedia/commons/8/8c/PS4-Console-wDS4.png'
+  },  {
+    id: 38,
+    name: "PlayStation Portable",
+    manufacturerID: 45,
+    manufacturer: 'Sony',
+    slug: "psp",
+    image: '//upload.wikimedia.org/wikipedia/commons/4/46/Psp-1000.jpg'
+  },  {
+    id: 46,
+    name: "PlayStation Vita",
+    manufacturerID: 45,
+    manufacturer: 'Sony',
+    slug: "psvita",
+    image: '//upload.wikimedia.org/wikipedia/commons/b/b4/PlayStation-Vita-1101-FL.jpg'
+  },
+  {
+    id: 37,
+    name: "Nintendo 3DS",
+    manufacturerID: 70,
     manufacturer: 'Nintendo',
-    image: 'http://placehold.it/350x150'
-  }, {
+    slug: "3ds",
+    image: '//upload.wikimedia.org/wikipedia/commons/f/f0/Nintendo-3DS-AquaOpen.jpg'
+  },
+  {
     id: 4,
-    name: 'PlayStation 3',
-    manufacturer: 'Sony',
-    image: 'http://placehold.it/350x150'
+    name: "Nintendo 64",
+    manufacturerID: 70,
+    manufacturer: 'Nintendo',
+    slug: "n64",
+    image: '//upload.wikimedia.org/wikipedia/commons/e/e9/Nintendo-64-wController-L.jpg'
+  },
+  {
+    id: 20,
+    name: "Nintendo DS",
+    manufacturerID: 70,
+    manufacturer: 'Nintendo',
+    slug: "nds",
+    image: '//upload.wikimedia.org/wikipedia/commons/a/a0/Nintendo-DS-Lite-Black-Open.jpg'
+  },
+  {
+    id: 18,
+    name: "Nintendo Entertainment System (NES)",
+    manufacturerID: 70,
+    manufacturer: 'Nintendo',
+    slug: "nes",
+    image: '//upload.wikimedia.org/wikipedia/commons/8/82/NES-Console-Set.jpg'
+  },
+  {
+    id: 21,
+    name: "Nintendo GameCube",
+    manufacturerID: 70,
+    manufacturer: 'Nintendo',
+    slug: "ngc",
+    image: '//upload.wikimedia.org/wikipedia/commons/2/2b/GameCube-Console-Set.png'
+  },
+  {
+    id: 58,
+    name: "Super Famicom",
+    manufacturerID: 70,
+    manufacturer: 'Nintendo',
+    slug: "sfam",
+    image: '//upload.wikimedia.org/wikipedia/commons/e/ee/Nintendo-Super-Famicom-Set-FL.jpg'
+  },
+  {
+    id: 19,
+    name: "Super Nintendo Entertainment System (SNES)",
+    manufacturerID: 70,
+    manufacturer: 'Nintendo',
+    slug: "snes--1",
+    image: '//upload.wikimedia.org/wikipedia/commons/3/31/SNES-Mod1-Console-Set.jpg'
+  },
+  {
+    id: 5,
+    name: "Wii",
+    manufacturerID: 70,
+    manufacturer: 'Nintendo',
+    slug: "wii",
+    image: '//upload.wikimedia.org/wikipedia/commons/f/f3/Wii-Console.png'
+  },
+  {
+    id: 41,
+    name: "Wii U",
+    manufacturerID: 70,
+    manufacturer: 'Nintendo',
+    slug: "wiiu",
+    image: '//upload.wikimedia.org/wikipedia/commons/4/4a/Wii_U_Console_and_Gamepad.png'
+  },
+  {
+    id: 11,
+    name: "Xbox",
+    manufacturerID: 128,
+    manufacturer: 'Microsoft',
+    slug: "xbox",
+    image: '//upload.wikimedia.org/wikipedia/commons/4/43/Xbox-console.jpg'
+  },
+  {
+    id: 12,
+    name: "Xbox 360",
+    manufacturerID: 128,
+    manufacturer: 'Microsoft',
+    slug: "xbox360",
+    image: '//upload.wikimedia.org/wikipedia/commons/a/a8/Xbox-360-Pro-wController.png'
+  },
+  {
+    id: 49,
+    name: "Xbox One",
+    manufacturerID: 128,
+    manufacturer: 'Microsoft',
+    slug: "xboxone",
+    image: '//upload.wikimedia.org/wikipedia/commons/4/42/Xbox_One_Console_Set.jpg'
+  },
+  {
+    id: 59,
+    name: "Atari 2600",
+    manufacturerID: 82,
+    manufacturer: 'Atari',
+    slug: "atari2600",
+    image:'//upload.wikimedia.org/wikipedia/commons/b/b9/Atari-2600-Wood-4Sw-Set.jpg'
+  },
+  {
+    id: 66,
+    name: "Atari 5200",
+    manufacturerID: 82,
+    manufacturer: 'Atari',
+    slug: "atari5200",
+    image: '//upload.wikimedia.org/wikipedia/commons/a/a0/Atari-5200-4-Port-wController-L.jpg'
+  },
+  {
+    id: 60,
+    name: "Atari 7800",
+    manufacturerID: 82,
+    manufacturer: 'Atari',
+    slug: "atari7800",
+    image: '//upload.wikimedia.org/wikipedia/commons/c/cf/Atari-7800-Console-Set.png'
+  },
+  {
+    id: 62,
+    name: "Atari Jaguar",
+    manufacturerID: 82,
+    manufacturer: 'Atari',
+    slug: "jaguar",
+    image: '//upload.wikimedia.org/wikipedia/commons/9/90/Atari-Jaguar-Console-Set.png'
+  },
+  {
+    id: 61,
+    name: "Atari Lynx",
+    manufacturerID: 82,
+    manufacturer: 'Atari',
+    slug: "lynx",
+    image:  '//upload.wikimedia.org/wikipedia/commons/d/d6/Atari-Lynx-I-Handheld.jpg'
+  },
+  {
+    id: 84,
+    name: "SG-1000",
+    manufacturerID: 112,
+    manufacturer: 'Sega',
+    slug: "sg1000",
+    image: '//en.wikipedia.org/wiki/File:Sega-SG-1000-Console-Set.jpg'
+  },
+  {
+    id: 30,
+    name: "Sega 32X",
+    manufacturerID: 112,
+    manufacturer: 'Sega',
+    slug: "sega32",
+    image: '//en.wikipedia.org/wiki/File:Sega-Genesis-Model2-32X.jpg'
+  },
+  {
+    id: 35,
+    name: "Sega Game Gear",
+    manufacturerID: 112,
+    manufacturer: 'Sega',
+    slug: "gamegear",
+    image: '//upload.wikimedia.org/wikipedia/commons/1/18/Game-Gear-Handheld.jpg'
+  },
+  {
+    id: 64,
+    name: "Sega Master System",
+    manufacturerID: 112,
+    manufacturer: 'Sega',
+    slug: "sms",
+    image: '//upload.wikimedia.org/wikipedia/commons/9/98/Master_System_II.jpg'
+  },
+  {
+    id: 29,
+    name: "Sega Mega Drive/Genesis",
+    manufacturerID: 112,
+    manufacturer: 'Sega',
+    slug: "smd",
+    image: '//upload.wikimedia.org/wikipedia/commons/a/a1/Sega-Mega-Drive-JP-Mk1-Console-Set.jpg'
+  },
+  {
+    id: 32,
+    name: "Sega Saturn",
+    manufacturerID: 112,
+    manufacturer: 'Sega',
+    slug: "saturn",
+    image: '//upload.wikimedia.org/wikipedia/commons/2/20/Sega-Saturn-Console-Set-Mk1.png'
+  },
+  {
+    id: 23,
+    name: "Dreamcast",
+    manufacturerID: 112,
+    manufacturer: 'Sega',
+    slug: "dc",
+    image: '//upload.wikimedia.org/wikipedia/commons/0/07/Dreamcast-Console-Set.png'
   }];
 
   return {
@@ -310,14 +510,21 @@ angular.module('game.factories', ['ngCordovaOauth'])
         }
       }
       return null;
-    }
+    },
+    getByCompany: function(id) {
+
+      return _.filter(platforms, function(platform){ return platform.manufacturerID == id; });
+    },
   };
 })
 
-.factory('GameService', ['API_CONSTANTS', function(API_CONSTANTS) {
-  // Might use a resource here that returns a JSON array
+.factory('GameService', ['API_CONSTANTS', '$http', '$q', function(API_CONSTANTS, $http, $q) {
 
-  // Some fake testing data
+  var pagination = {
+    limit: 30,
+    offset : 0
+  };
+
   var games = [{
     id: 1037,
     name: "The Legend of Zelda: Phantom Hourglass",
@@ -382,72 +589,51 @@ angular.module('game.factories', ['ngCordovaOauth'])
       games.splice(games.indexOf(chat), 1);
     },
     getByPlatform: function(platformId){
-      return $http.get(API_CONSTANTS.API_BASE_URL + '/platforms/' + platformId + '/games?token='+API_CONSTANTS.API_KEY).then(function(result) {
+      var deferred = $q.defer();
+      $http.get(API_CONSTANTS.API_BASE_URL + '/platforms/' + platformId + '/games?token='+API_CONSTANTS.API_KEY).then(function(result) {
         var data = result.data;
 
-        if (data.errors.length > 0) {
-          throw new Error(data.errors.join('\n'));
-        }
-
-        return data;
+        console.log(data);
+        deferred.resolve(data.games);
       });
+      return deferred.promise;
+    },
+    getNextByPlatform: function(platformId){
+      var deferred = $q.defer();
+      $http.get(API_CONSTANTS.API_BASE_URL + '/platforms/' + platformId + '/games?limit=' + pagination.limit + '&offset=' + pagination.offset + '&token='+API_CONSTANTS.API_KEY).then(function(result) {
+        var data = result.data;
+        pagination.offset += pagination.limit;
+
+        console.log(data);
+        deferred.resolve(data.games);
+      });
+      return deferred.promise;
     },
     get: function(gameId) {
-      for (var i = 0; i < games.length; i++) {
-        if (games[i].id === parseInt(gameId)) {
-          return games[i];
-        }
-      }
-      return null;
+      var deferred = $q.defer();
+      $http.get(API_CONSTANTS.API_BASE_URL + '/games/' + gameId + '?token='+API_CONSTANTS.API_KEY).then(function(result) {
+        var data = result.data;
+
+        console.log(data);
+        deferred.resolve(data.game);
+      });
+      return deferred.promise;
     }
   };
 }])
 
-.factory('CommentService', function() {
+.factory('StorageService', ['$localStorage', function($localStorage) {
   // Might use a resource here that returns a JSON array
 
-  // Some fake testing data
-  var chats = [{
-    id: 0,
-    name: 'Ben Sparrow',
-    lastText: 'You on your way?',
-    face: 'img/ben.png'
-  }, {
-    id: 1,
-    name: 'Max Lynx',
-    lastText: 'Hey, it\'s me',
-    face: 'img/max.png'
-  }, {
-    id: 2,
-    name: 'Adam Bradleyson',
-    lastText: 'I should buy a boat',
-    face: 'img/adam.jpg'
-  }, {
-    id: 3,
-    name: 'Perry Governor',
-    lastText: 'Look at my mukluks!',
-    face: 'img/perry.png'
-  }, {
-    id: 4,
-    name: 'Mike Harrington',
-    lastText: 'This is wicked good ice cream.',
-    face: 'img/mike.png'
-  }];
-
   return {
-    all: function() {
-      return chats;
+    get: function(key) {
+      return $localStorage[key];
     },
-    remove: function(chat) {
-      chats.splice(chats.indexOf(chat), 1);
+    set: function(key, value) {
+      $localStorage[key] = value;
     },
-    get: function(chatId) {
-      for (var i = 0; i < chats.length; i++) {
-        if (chats[i].id === parseInt(chatId)) {
-          return chats[i];
-        }
-      }
-      return null;
+    clear: function(chatId) {
+      $localStorage.$reset();
     }
   };
-});
+}]);

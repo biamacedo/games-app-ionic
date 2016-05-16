@@ -2,38 +2,15 @@
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
-  <ion-content class="padding">
-    <p>Owned</p>
-      <p>Owned</p>
-        <p>Owned</p>
-          <p>Owned</p>
-            <p>Owned</p>
-              <p>Owned</p>
-                <p>Owned</p>
-                  <p>Owned</p>
-                    <p>Owned</p>
-                      <p>Owned</p>
-                        <p>Owned</p>
-                          <p>Owned</p>
-                            <p>Owned</p>
-                              <p>Owned</p>
-                                <p>Owned</p>
-                                  <p>Owned</p>
-                                    <p>Owned</p>
-                                      <p>Owned</p>
-                                        <p>Owned</p>
-                                          <p>Owned</p>
-                                            <p>Owned</p>
-                                              <p>Owned</p>
-                                                <p>Owned</p>
-                                                  <p>Owned</p>
-                                                    <p>Owned</p>
-                                                      <p>Owned</p>
-                                                        <p>Owned</p>
-                                                          <p>Owned</p>
-                                                            <p>Owned</p>
-                                                              <p>Owned</p>
-                                                                <p>Owned</p>
-                                                                  <p>Last</p>
+  <ion-content class="">
+    <ion-list>
+      <ion-item class="item-remove-animate item-thumbnail-left" ng-repeat="game in getGamesOwned()" type="item-text-wrap" href="#/app/game/detail/{{game.id}}">
+        <img ng-src="{{game.cover.url}}">
+        <h2 class="text-wrap">{{game.name}}</h2>
+      </ion-item>
+      <ion-item class="item-remove-animate" ng-if="getGamesOwned().length <= 0" type="text-center">
+        <h2>No Game Owned yet!</h2>
+      </ion-item>
+    </ion-list>
   </ion-content>
 </ion-view>

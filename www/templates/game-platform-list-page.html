@@ -1,19 +1,16 @@
 <ion-view view-title="{{manufacturer}} Consoles">
   <ion-content class="">
-    <div class="list">
-      <div ng-repeat="platform in platforms">
-
-            <div ng-click="go('/app/game/list/{{platform.id}}')" class="card">
-              <div class="item">
-                <h2>{{platform.name}}</h2>
-              </div>
-
-              <div class="item item-image">
-                <img ng-src="{{platform.image}}">
-              </div>
-            </div>
-
+      <div class="row" ng-repeat="platform in platforms" ng-if="$index % 2 == 0">
+        <!-- <p>{{platforms[$index].name}}</p> -->
+        <div class="col col-50" ng-if="$index < platforms.length"
+        ng-click="go('/app/game/list/{{platforms[$index].id}}')">
+            <img class="grid-image" ng-src="{{platforms[$index].image}}"/>
+        </div>
+        <!-- <p>{{platforms[$index +1].name}}</p> -->
+        <div class="col col-50" ng-if="$index < platforms.length - 1"
+        ng-click="go('/app/game/list/{{platforms[$index + 1].id}}')">
+            <img class="grid-image" ng-src="{{platforms[$index + 1].image}}" width="100%" />
+        </div>
       </div>
-    </div>
   </ion-content>
 </ion-view>

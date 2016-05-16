@@ -1,11 +1,16 @@
 <ion-view view-title="{{platform}} Games">
   <ion-content class="">
     <ion-list>
-      <ion-item class="item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="game in games" type="item-text-wrap" href="#/app/game/detail/{{game.id}}">
-        <img ng-src="{{game.cover.url}}">
-        <h2>{{game.name}}</h2>
+      <ion-item class="item-remove-animate item-icon-right" ng-repeat="game in games" type="item-text-wrap" href="#/app/game/detail/{{game.id}}">
+        <h2 class="text-wrap">{{game.name}}</h2>
+        <p class="">{{game.release_date}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
+    <ion-infinite-scroll
+      ng-if="moreDataCanBeLoaded()"
+      on-infinite="loadMore()"
+      distance="1%">
+    </ion-infinite-scroll>
   </ion-content>
 </ion-view>

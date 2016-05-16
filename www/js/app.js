@@ -105,8 +105,7 @@ angular.module('game', [
     url: '/sell',
     views: {
       'marketSell': {
-        templateUrl: 'templates/market-sell-page.html'//,
-        // controller: 'DashCtrl'
+        templateUrl: 'templates/market-sell-page.html'
       }
     }
   })
@@ -115,8 +114,7 @@ angular.module('game', [
     url: '/buy',
     views: {
       'marketBuy': {
-        templateUrl: 'templates/market-buy-page.html'//,
-        // controller: 'ChatsCtrl'
+        templateUrl: 'templates/market-buy-page.html'
       }
     }
   })
@@ -134,7 +132,8 @@ angular.module('game', [
     url: '/owned',
     views: {
       'gamesOwned' :{
-        templateUrl: 'templates/user-games-owned-page.html'
+        templateUrl: 'templates/user-games-owned-page.html',
+        controller: 'gmUserGamesOwnedCtrl'
       }
     }
   })
@@ -143,7 +142,8 @@ angular.module('game', [
     url: '/wish',
     views: {
       'gamesWish' :{
-        templateUrl: 'templates/user-games-wish-page.html'
+        templateUrl: 'templates/user-games-wish-page.html',
+        controller: 'gmUserGamesWishCtrl'
       }
     }
   })
@@ -162,8 +162,8 @@ angular.module('game', [
     url: '/settings',
     views: {
       'menuContent': {
-        templateUrl: 'templates/settings-page.html'//,
-        // controller: 'AccountCtrl'
+        templateUrl: 'templates/settings-page.html',
+        controller: 'gmSettingsCtrl'
       }
     }
   });

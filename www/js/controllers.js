@@ -91,7 +91,7 @@ angular.module('game.controllers', ['ngCordova'])
 
     $scope.manufacturer = ManufacturerService.get(manufacturerId).name;
 
-    $scope.platforms = PlatformService.all();
+    $scope.platforms = PlatformService.getByCompany(manufacturerId);
 
 
 }])
@@ -101,7 +101,24 @@ angular.module('game.controllers', ['ngCordova'])
 
     $scope.platform = PlatformService.get(platformId).name;
 
-    $scope.games = GameService.all();
+    GameService.getNextByPlatform(platformId).then(function(data){
+      console.log("Got Games Data");
+      $scope.games = data;
+    });
+
+    $scope.moreDataCanBeLoaded = function(){
+      return true;
+    };
+
+    $scope.loadMore = function(){
+      GameService.getNextByPlatform(platformId).then(function(data){
+        console.log("Got Games Next Data");
+        console.log(data);
+        angular.extend($scope.games, data);
+        console.log($scope.games);
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+      });
+    };
 
 }])
 
@@ -113,11 +130,13 @@ angular.module('game.controllers', ['ngCordova'])
   'GameService',
   '$cordovaToast',
 function($scope, $state, $stateParams, UserService, GameService, $cordovaToast) {
-    var gameIndexId = $stateParams.gameId;
+    var gameId = $stateParams.gameId;
+    console.log(gameId);
 
-    $scope.game = GameService.get(gameIndexId);
-
-    var gameId = angular.copy($scope.game.id);
+    GameService.get(gameId).then(function(data){
+      console.log("Got Game Data");
+      $scope.game = data;
+    });
 
     $scope.isFavorite = function(){
       return UserService.user.hasFavorite(gameId);
@@ -162,6 +181,33 @@ function($scope, $state, $stateParams, UserService, GameService, $cordovaToast) 
 
 }])
 
+.controller('gmUserGamesOwnedCtrl', ['$scope', 'UserService', '$cordovaToast', 'GameService', function($scope, UserService, $cordovaToast, GameService) {
+  console.log("gmUserGamesOwnedCtrl");
+  $scope.user = UserService.current();
+
+  $scope.getGamesOwned = function(){
+    var games = GameService.all();
+    return _.filter(games, function(game){
+        return _.contains($scope.user.games.owned, game.id);
+    });
+  };
+
+}])
+
+
+.controller('gmUserGamesWishCtrl', ['$scope', 'UserService', '$cordovaToast', 'GameService', function($scope, UserService, $cordovaToast, GameService) {
+  console.log("gmUserGamesWishCtrl");
+  $scope.user = UserService.current();
+
+  $scope.getWishList = function(){
+    var games = GameService.all();
+    return _.filter(games, function(game){
+        return _.contains($scope.user.games.wishListed, game.id);
+    });
+  };
+
+}])
+
 .controller('gmUserProfileCtrl', ['$scope', 'UserService', '$cordovaToast', function($scope, UserService, $cordovaToast) {
   console.log("gmUserProfileCtrl");
   $scope.user = UserService.current();
@@ -191,12 +237,14 @@ function($scope, $state, $stateParams, UserService, GameService, $cordovaToast) 
     $scope.user = UserService.current();
     $scope.editComment.comment = "";
     $scope.editComment.rating = 1;
+    $scope.$apply();
   };
 
 }])
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
+.controller('gmSettingsCtrl', ['$scope', 'StorageService', function($scope, StorageService) {
+  $scope.clearUserInformation = function(){
+      StorageService.clear();
+      $cordovaToast.showLongBottom('User Info Cleared!');
   };
-});
+}]);

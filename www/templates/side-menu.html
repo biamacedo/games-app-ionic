@@ -2,11 +2,11 @@
 
   <ion-pane ion-side-menu-content>
     <ion-nav-bar class="bar-game">
-      <ion-nav-back-button class="button-clear">
-        <i class="icon" ng-class="{
+      <ion-nav-back-button class="button-clear button-game">
+        <a class="button button-icon icon" ng-class="{
         'ion-ios-arrow-back': mobile.platform !== 'android',
         'ion-android-arrow-back': mobile.platform == 'android'
-      }"></i>
+      }"></a>
     </ion-nav-back-button>
     </ion-nav-bar>
     <ion-nav-view name="menuContent" animation="slide-left-right"></ion-nav-view>
@@ -18,25 +18,24 @@
     </header>
     <ion-content class="has-header" overflow-scroll="false">
       <ion-list>
-        <ion-item class="item-avatar item-icon-left item-icon-right" nav-clear menu-close href="#/app/profile">
+        <ion-item class="item-avatar" nav-clear menu-close href="#/app/profile">
           <img ng-src="{{user.imageUrl}}" />
           <h2>{{user.name}}</h2>
           <p>{{user.level.status}}</p>
-          <span class="badge badge-game ">0</span>
         </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/games">
           My Games
-          <span class="badge badge-assertive">23</span>
+          <span class="badge badge-assertive">{{user.games.owned.length}}</span>
           <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
         </ion-item>
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/">
           Home
           <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
         </ion-item>
-        <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/market">
+        <!-- <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/market">
           Market
           <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
-        </ion-item>
+        </ion-item> -->
         <ion-item class="item-remove-animate item-icon-right" nav-clear menu-close href="#/app/settings">
           Settings
           <i class="icon ion-chevron-right icon-accessory" ng-if="mobile.platform == 'ios'"></i>
