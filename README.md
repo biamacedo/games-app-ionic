@@ -90,7 +90,17 @@ Now you can try Google Sign-In on the app.
 2. Add platforms using: ```ionic platforms add <browser/android/ios>```
 3. Run app using: ```ionic run <browser/android/ios>```
 
-## Screen Shots
+## Screen Shots:
+
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot1.PNG" width="200">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot2.PNG" width="200">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot3.PNG" width="200">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot4.PNG" width="200">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot5.PNG" width="200">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot6.PNG" width="200">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot7.PNG" width="200">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot8.PNG" width="200">
+<img src="https://github.com/biamacedo/gamestart-ionic/blob/master/assets/screenshots/Screenshot9.PNG" width="200">
 
 * * *
 
